@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  fastapi:
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - AZURE_OPENAI_KEY=${AZURE_OPENAI_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_DB=${REDIS_DB}
+      - LOG_FILE=${LOG_FILE}
+      - LOG_MAX_BYTES=${LOG_MAX_BYTES}
+      - LOG_BACKUP_COUNT=${LOG_BACKUP_COUNT}
+
+  alembic:
+    environment:
+      - DATABASE_URL=${DATABASE_URL}

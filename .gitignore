@@ -7,7 +7,8 @@ __pycache__/
 
 # FastAPI specific
 .env
-.env.*
+**/.env/**
+.env
 
 # IDE specific
 .vscode/
