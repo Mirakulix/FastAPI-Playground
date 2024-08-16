@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: syllabusmatcherai_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - syllabusmatcherai_network
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: syllabusmatcherai_fastapi
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - syllabusmatcherai_network
+    env_file:
+      - .env
+
+  alembic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: syllabusmatcherai_alembic
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    networks:
+      - syllabusmatcherai_network
+    depends_on:
+      - postgres
+    entrypoint: >
+      /bin/sh -c "alembic upgrade head && exit"
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
+
+networks:
+  syllabusmatcherai_network:
+    driver: bridge

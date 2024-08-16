@@ -1,0 +1,46 @@
+venv
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info
+
+# FastAPI specific
+.env
+.env.*
+
+# IDE specific
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite3
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.bak
+*.swp
+*.swo
+*~
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Documentation
+docs/_build/
+
+# Dependency directories
+node_modules/
+
+# Distribution / packaging
+dist/
+build/
+*.egg
