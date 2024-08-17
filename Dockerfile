@@ -11,14 +11,16 @@ RUN apt-get update && apt-get install -y \
     curl \
     && apt-get clean
 
-# Install Playwright browsers
-RUN pip install playwright && playwright install
+
 
 # Copy the requirements.txt file into the container
 COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Playwright browsers
+RUN pip install playwright && playwright install
 
 # Copy the current directory contents into the container at /app
 COPY . .

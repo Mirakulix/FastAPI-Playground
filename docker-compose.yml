@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:13
+    image: postgres:latest
     container_name: syllabusmatcherai_postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -16,6 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: syllabusmatcherai_fastapi
+    entrypoint: ["./wait_for_db.sh", "postgres:5432", "--", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
     environment:
       DATABASE_URL: ${DATABASE_URL}
     ports:
@@ -38,8 +39,7 @@ services:
       - syllabusmatcherai_network
     depends_on:
       - postgres
-    entrypoint: >
-      /bin/sh -c "alembic upgrade head && exit"
+    entrypoint: ["./wait_for_db.sh", "postgres:5432", "--", "alembic", "upgrade", "head"]
     env_file:
       - .env
 
